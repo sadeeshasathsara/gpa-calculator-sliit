@@ -257,11 +257,13 @@
             right: 30px;
             cursor: pointer;
         }
-        footer{
+
+        footer {
             position: absolute;
             bottom: 0;
         }
-        footer a{
+
+        footer a {
             color: #afafafcb;
             text-decoration: none;
             font-size: 10px;
@@ -290,7 +292,7 @@
     </div>
 
     <footer>
-        <a href="https://github.com/sadeeshasathsara">Sadeesha Sathsara</a>
+        <a href="https://github.com/sadeeshasathsara/gpa-calculator">Sadeesha Sathsara</a>
     </footer>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" id="svg"
@@ -383,6 +385,7 @@
 
             var gpa = calculateGPA(data);
             document.getElementById('gpa').innerHTML = "GPA: " + gpa;
+            alert(JSON.stringify(gradePoints, null, 2));
         }
 
         // Function to get the grade point value for a given grade
@@ -535,19 +538,17 @@
             });
 
             document.getElementById('btn1').addEventListener('click', function () {
-                count = 100;
+                var inputs = document.querySelectorAll('#table-cont input');
 
-                for (var i = 0; i < 12; i++) {
-                    gradePoints[i].grade = document.getElementById(count).value;
-                    count++;
-                    gradePoints[i].value = document.getElementById(count).value;
-                    count++;
-                    gradePoints[i].range = document.getElementById(count).value;
-                    count++;
-                }
+                gradePoints.forEach((item, index) => {
+                    item.grade = inputs[index * 3].value;
+                    item.value = parseFloat(inputs[index * 3 + 1].value);
+                    item.range = inputs[index * 3 + 2].value;
+                });
 
                 document.getElementById('popup').style.visibility = 'hidden';
             });
+
         }
     </script>
 
