@@ -35,7 +35,7 @@ To run this project locally, follow these steps:
    cd gpa-calculator
    ```
 
-3. **Open `index.html` in your preferred web browser.**
+3. **Open `gpa-calculator.html` in your preferred web browser.**
 
 ## 🔧 Usage
 
