@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .f {
+            display: flex;
+        }
+
+        .c {
+            flex-direction: column;
+        }
+
+        .aic {
+            align-items: center;
+        }
+
+        .jcc {
+            justify-content: center;
+        }
+
+        .jcfe {
+            justify-content: flex-end;
+        }
+
+        .jcsb {
+            justify-content: space-between;
+        }
+
+        body {
+            background-color: #111218;
+            color: #fff;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            height: 100vh;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .container {
+            border: 3px solid rgba(63, 64, 74, 0.578);
+            padding: 10px;
+            width: 400px;
+            max-width: 500px;
+            height: 400px;
+            border-radius: 20px;
+            overflow-y: scroll;
+            background-color: #15171f;
+            box-shadow: rgba(49, 50, 58, 0.781) 0px 5px 15px;
+        }
+
+        .container::-webkit-scrollbar {
+            display: none;
+        }
+
+        h1 {
+            border-bottom: 1px solid #b4b4b4;
+            user-select: none;
+        }
+
+        .btn {
+            border: none;
+            padding: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.2s ease-in-out;
+            letter-spacing: 1px;
+            user-select: none;
+        }
+
+        #btn-container {
+            width: 100%;
+        }
+
+        #add-module {
+            background-color: rgb(8, 138, 138);
+            color: #fff;
+        }
+
+        #add-module:hover {
+            background-color: #43954a;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        #content {
+            height: 200px;
+            width: 95%;
+            padding: 5px;
+            margin: 20px 0px 20px 0px;
+            overflow-y: scroll;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px 5px;
+        }
+
+        #content::-webkit-scrollbar {
+            display: none;
+        }
+
+        #header {
+            width: 95%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 5px;
+            margin-bottom: -30px;
+            gap: 5px;
+        }
+
+        #header p {
+            font-size: 10px;
+            background-color: rgb(0, 74, 54);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 5px;
+            user-select: none;
+        }
+
+        .footer {
+            width: 100%;
+            padding: 0px 20px 0px 20px;
+            background-color: #111218;
+            border-radius: 10px;
+        }
+
+        .block,
+        .del {
+            height: 20px;
+            width: 100%;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 10px 5px 10px 5px;
+        }
+
+        .block {
+            background-color: #111218;
+            color: #c1c1c1;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        .del {
+            background-color: #9d0000;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+            font-weight: 600;
+            font-family: sans-serif;
+        }
+
+        .del:active {
+            transform: scale(0.95);
+        }
+
+        #popup {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            background-color: #00000082;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid rgb(47, 47, 47);
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        #table-cont {
+            overflow: scroll;
+            height: 60vh;
+        }
+
+        #table-cont::-webkit-scrollbar {
+            display: none;
+        }
+
+        #table-cont input {
+            border: 1px solid #3d3d3d;
+            padding: 5px;
+            width: 100%;
+            border-radius: 5px;
+            background-color: #111218;
+            color: #c7c7c7;
+        }
+
+        #saveBtn-cont {
+            position: sticky;
+            width: 100%;
+            height: 35px;
+            background-color: #111218;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        #btn1,
+        #btn2 {
+            width: 100px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            transition: none;
+        }
+
+        #btn1 {
+            background-color: #16335b;
+            color: #fff;
+        }
+
+        #btn2 {
+            background-color: #165b3f;
+            color: #fff;
+        }
+
+        svg {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            top: 30px;
+            right: 30px;
+            cursor: pointer;
+        }
+        footer{
+            position: absolute;
+            bottom: 0;
+        }
+        footer a{
+            color: #afafafcb;
+            text-decoration: none;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body class="f c aic jcc">
+
+    <div id="cont" class="container f c aic">
+        <h1>GPA Calculator</h1>
+        <div id="btn-container" class="f jcfe">
+            <button id="add-module" class="btn f c aic aic">Add Module</button>
+        </div>
+        <div id="header" class="">
+            <p>Module Name</p>
+            <p>Grade</p>
+            <p>Module Points</p>
+        </div>
+        <div id="content"></div>
+        <div class="footer f aic jcsb">
+            <button id="calculate" class="btn f c aic">Calculate</button>
+            <p id="gpa">GPA: 0.00</p>
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://github.com/sadeeshasathsara">Sadeesha Sathsara</a>
+    </footer>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" id="svg"
+        viewBox="0 0 16 16">
+        <path
+            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+        <path
+            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+    </svg>
+
+    <div id="popup"></div>
+
+    <script>
+        var delId = 4;
+        var count = 0;
+        var data = [];
+        var gradePoints = [
+            { grade: 'A+', value: 4.0, range: '90-100' },
+            { grade: 'A', value: 4.0, range: '80-89' },
+            { grade: 'A-', value: 3.7, range: '75-79' },
+            { grade: 'B+', value: 3.3, range: '70-74' },
+            { grade: 'B', value: 3.0, range: '65-69' },
+            { grade: 'B-', value: 2.7, range: '60-64' },
+            { grade: 'C+', value: 2.3, range: '55-59' },
+            { grade: 'C', value: 2.0, range: '45-54' },
+            { grade: 'C-', value: 1.7, range: '40-44' },
+            { grade: 'D+', value: 1.3, range: '35-39' },
+            { grade: 'D', value: 1.0, range: '30-34' },
+            { grade: 'E', value: 0.0, range: '<30' }
+        ];
+
+
+        document.getElementById('add-module').addEventListener('click', function () {
+            row(delId);
+            count++;
+
+            data.push({ rowId: count, module: "", grade: "", points: 0.0 });
+
+            var delBtns = document.getElementsByClassName('del');
+            Array.prototype.forEach.call(delBtns, function (element) {
+                var tempId = element.id;
+                element.addEventListener('click', function () {
+                    document.getElementById(element.id).remove();
+                    for (var i = 3; i >= 1; i--) {
+                        document.getElementById(element.id - i).remove();
+                    }
+                    count--;
+                    if (index = data.findIndex(item => item.rowId == element.id / 4)) {
+                        data.splice(index, 1);
+                    }
+                });
+            });
+        });
+
+        document.getElementById('calculate').addEventListener('click', calculation);
+
+        function row(pId) {
+            for (var i = 3; i >= 1; i--) {
+                var temp = pId - i;
+                createInput(temp);
+            }
+            var del = document.createElement('div');
+            del.className = 'del';
+            del.id = delId;
+            del.appendChild(document.createTextNode('DEL'));
+            document.getElementById('content').appendChild(del);
+
+            delId = delId + 4;
+        }
+
+        createPopup();
+
+        document.getElementById('svg').addEventListener('click', function () {
+            document.getElementById('popup').style.visibility = 'visible';
+        });
+
+        function createInput(paId) {
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'block'
+            input.id = paId;
+            input.required = true;
+
+            var content = document.getElementById('content');
+            content.appendChild(input);
+        }
+
+        function calculation() {
+            gatherData();
+
+            var gpa = calculateGPA(data);
+            document.getElementById('gpa').innerHTML = "GPA: " + gpa;
+        }
+
+        // Function to get the grade point value for a given grade
+        function getGradePoint(grade) {
+            const gradeEntry = gradePoints.find(entry => entry.grade === grade);
+            return gradeEntry ? gradeEntry.value : 0;
+        }
+
+        // Function to calculate GPA
+        function calculateGPA(data) {
+            let totalPoints = 0;
+            let totalCredits = 0;
+
+            data.forEach(item => {
+                const gradePoint = getGradePoint(item.grade);
+                const points = parseFloat(item.points);
+                totalPoints += gradePoint * points;
+                totalCredits += points;
+            });
+
+            // Avoid division by zero
+            return totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+        }
+
+        function delData(rowId) {
+            var index = data.findIndex(row => row.rowId === rowId);
+            if (index !== -1) {
+                data.splice(index, 1);
+            }
+        }
+        function gatherData() {
+            var tc = 0;
+            for (let i = 0; i < count; i++) {
+                const moduleElement = document.getElementById(tc + 1);
+                const gradeElement = document.getElementById(tc + 2);
+                const pointsElement = document.getElementById(tc + 3);
+                const delButton = document.getElementById(tc + 4);
+
+                if (!moduleElement || !gradeElement || !pointsElement) {
+                    tc += 4;
+                    i--;
+                    continue;
+                }
+
+                if (moduleElement.value === "" || gradeElement.value === "" || pointsElement.value === "") {
+                    moduleElement.remove();
+                    gradeElement.remove();
+                    pointsElement.remove();
+                    delButton.remove();
+
+                    if (index = data.findIndex(item => item.rowId == document.getElementById((tc + 4) / 4))) {
+                        data.splice(index, 1);
+
+                        data[i] = {
+                            module: null,
+                            grade: null,
+                            points: null
+                        };
+
+                        count--;
+                    }
+                } else {
+                    data[i] = {
+                        module: moduleElement.value.trim().toUpperCase(),
+                        grade: gradeElement.value.trim().toUpperCase(),
+                        points: pointsElement.value.trim()
+                    };
+                }
+
+                tc += 4;
+            }
+        }
+
+
+        function createPopup() {
+            var popup = document.createElement('div');
+            popup.className = 'container';
+            popup.id = 'popup-cont';
+
+            var tableCont = document.createElement('div');
+            tableCont.id = 'table-cont';
+
+            document.getElementById('popup').appendChild(popup);
+            document.getElementById('popup-cont').appendChild(tableCont);
+            createTable();
+        }
+
+        function createTable() {
+            var table = document.createElement('table');
+
+            var thead = document.createElement('thead');
+            var headerRow = document.createElement('tr');
+
+            var headers = ["Grade", "Grade Point", "Marks Range"];
+            headers.forEach(function (header) {
+                var th = document.createElement('th');
+                th.appendChild(document.createTextNode(header));
+                headerRow.appendChild(th);
+            });
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            var tbody = document.createElement('tbody');
+
+            var count = 100;
+
+            gradePoints.forEach(function (item) {
+                var row = document.createElement('tr');
+
+                Object.keys(item).forEach(function (key) {
+                    var td = document.createElement('td');
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = item[key];
+                    input.id = count;
+                    count++;
+                    td.appendChild(input);
+                    row.appendChild(td);
+                });
+
+                tbody.appendChild(row);
+            });
+
+            var div = document.createElement('div');
+            div.id = 'saveBtn-cont';
+
+
+            var btn1 = document.createElement('button');
+            btn1.className = 'btn';
+            btn1.id = 'btn1';
+            btn1.textContent = "SAVE";
+
+            var btn2 = document.createElement('button');
+            btn2.className = 'btn';
+            btn2.id = 'btn2';
+            btn2.textContent = 'Close';
+
+
+            table.appendChild(tbody);
+
+            document.getElementById('table-cont').appendChild(table);
+            document.getElementById('popup-cont').appendChild(div);
+            document.getElementById('saveBtn-cont').appendChild(btn1);
+            document.getElementById('saveBtn-cont').appendChild(btn2);
+            document.getElementById('btn1').value = 'SAVE';
+
+            document.getElementById('btn2').addEventListener('click', function () {
+                document.getElementById('popup').style.visibility = 'hidden';
+            });
+
+            document.getElementById('btn1').addEventListener('click', function () {
+                count = 100;
+
+                for (var i = 0; i < 12; i++) {
+                    gradePoints[i].grade = document.getElementById(count).value;
+                    count++;
+                    gradePoints[i].value = document.getElementById(count).value;
+                    count++;
+                    gradePoints[i].range = document.getElementById(count).value;
+                    count++;
+                }
+
+                document.getElementById('popup').style.visibility = 'hidden';
+            });
+        }
+    </script>
+
+</body>
+
+</html>
