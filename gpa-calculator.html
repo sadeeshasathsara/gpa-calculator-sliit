@@ -48,13 +48,45 @@
         .container {
             border: 3px solid rgba(63, 64, 74, 0.578);
             padding: 10px;
-            width: 400px;
+            width: 40%;
             max-width: 500px;
             height: 400px;
             border-radius: 20px;
             overflow-y: scroll;
             background-color: #15171f;
             box-shadow: rgba(49, 50, 58, 0.781) 0px 5px 15px;
+        }
+
+        /* For tablets and larger screens */
+        @media (max-width: 768px) {
+            .container {
+                width: 60%;
+                height: 300px;
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .container {
+                width: 80%;
+                height: 500px;
+                margin: 10px;
+            }
+        }
+
+        @media (max-width: 300px) {
+            .container {
+                width: 80%;
+                height: 600px;
+                margin: 10px;
+            }
         }
 
         .container::-webkit-scrollbar {
@@ -385,10 +417,8 @@
 
             var gpa = calculateGPA(data);
             document.getElementById('gpa').innerHTML = "GPA: " + gpa;
-            alert(JSON.stringify(gradePoints, null, 2));
         }
 
-        // Function to get the grade point value for a given grade
         function getGradePoint(grade) {
             const gradeEntry = gradePoints.find(entry => entry.grade === grade);
             return gradeEntry ? gradeEntry.value : 0;
