@@ -1,6 +1,6 @@
 # A Simple Javascript GPA Calculator
 
-LIVE PREVIEW - ![prev](https://gradepointaveragecalculator.on.drv.tw/gpacalculator.app/)
+LIVE PREVIEW - https://gradepointaveragecalculator.on.drv.tw/gpacalculator.app/
 
 ## 📚 Description
 
