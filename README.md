@@ -1,5 +1,7 @@
 # A Simple Javascript GPA Calculator
 
+LIVE PREVIEW - !prev](https://gradepointaveragecalculator.on.drv.tw/gpacalculator.app/)
+
 ## 📚 Description
 
 The **GPA Calculator** is a web application designed to help students calculate their Grade Point Average (GPA). It provides a user-friendly interface for adding modules, entering grades and credit points, and calculating the overall GPA. The application also includes a summary popup where users can view and edit grade information.
